@@ -84,7 +84,22 @@ ModelImporter:
     4300020: Lamp.001
     10800000: Light
     10800002: Light.001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Alert Light
+    second: {fileID: 2100000, guid: a87eb883bb780ae4a982aac243006ada, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Accesory
+    second: {fileID: 2100000, guid: 91de48d3dba21c54f84a35139bd3fb9c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal Body
+    second: {fileID: 2100000, guid: 941f776790f779444b4cfa267789c461, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

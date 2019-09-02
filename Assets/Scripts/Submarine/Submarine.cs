@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Submarine : MonoBehaviour
 {
@@ -9,10 +10,18 @@ public class Submarine : MonoBehaviour
     [SerializeField] float speedOfRotation = 20f;
     [SerializeField] float speedOfPropulsion = 20f;
 
+    enum State { Alive, Dead, Trascending};
+    State submaerineState = State.Alive;
+
+    bool hasMove;
+
+    GameManager manager;
+
     AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<GameManager>();
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -20,13 +29,37 @@ public class Submarine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        if (submaerineState == State.Alive)
+        {
+            Propel();
+            Rotate();
+        }
     }
 
-    void ProcessInput()
+    void Rotate()
+    {
+        rigidBody.freezeRotation = true;
+        var rotationForce = speedOfRotation * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            FirstMove();
+            transform.Rotate(Vector3.forward * rotationForce);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            FirstMove();
+            transform.Rotate(-Vector3.forward * rotationForce);
+        }
+
+        rigidBody.freezeRotation = false;
+    }
+
+    private void Propel()
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            FirstMove();
             rigidBody.AddRelativeForce(Vector3.right * speedOfPropulsion);
             if (!audioSource.isPlaying)
             {
@@ -37,14 +70,42 @@ public class Submarine : MonoBehaviour
         {
             audioSource.Pause();
         }
+    }
 
-        if (Input.GetKey(KeyCode.A))
+    void FirstMove()
+    {
+        if (!hasMove)
         {
-            transform.Rotate(Vector3.forward * speedOfRotation * Time.deltaTime);
+            hasMove = true;
+            manager.StartMovement();
         }
-        else if(Input.GetKey(KeyCode.D))
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (submaerineState == State.Alive)
         {
-            transform.Rotate(-Vector3.forward * speedOfRotation * Time.deltaTime);
+            switch (collision.gameObject.tag)
+            {
+                case "Friendly":
+                    break;
+                case "Finish":
+                    manager.NextScene();
+                    break;
+                default:
+                    audioSource.clip = Resources.Load<AudioClip>("Audio/SFX/Submarine/Hit");
+                    audioSource.loop = false;
+                    audioSource.Play();
+                    submaerineState = State.Dead;
+                    Camera.main.GetComponent<CameraFollow>().SubmarineIsDead();
+                    rigidBody.useGravity = true;
+                    manager.EndGame();
+                    break;
+            }
+        }
+        else
+        {
+            audioSource.Play();
         }
     }
 }
