@@ -17,13 +17,13 @@ public class UIManager : MonoBehaviour
     {
         manager = FindObjectOfType<GameManager>();
         manager.Initilization(this);
-        livesAmountText.text = $"X {manager.data.currentGame.currentLives}";
+        livesAmountText.text = $"X {manager.GetLives()}";
         HideNextButton();
     }
 
     private void Update()
     {
-        timeText.text = manager.data.currentGame.currentTotalTime.ToString("00");
+        timeText.text = manager.GetTimeAsString("00");
     }
 
     #region ButtonCalls

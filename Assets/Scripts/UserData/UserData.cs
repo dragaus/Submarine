@@ -15,6 +15,7 @@ public class UserData : ScriptableObject
 public class CurrentGame
 {
     public int currentLives;
+    public bool isRepeatLevel = false;
     public float currentTotalTime;
     public float currentScore;
 }
@@ -22,9 +23,5 @@ public class CurrentGame
 [System.Serializable]
 public class GeneralData
 {
-    public int trys;
-    public int deads;
-    public int wins;
     public float totalTime;
-    public float maxScore;
 }

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Submarine : MonoBehaviour
 {
@@ -36,6 +35,7 @@ public class Submarine : MonoBehaviour
         }
     }
 
+    //This is used to rotate the submarine according to its z axis
     void Rotate()
     {
         rigidBody.freezeRotation = true;
@@ -55,6 +55,7 @@ public class Submarine : MonoBehaviour
         rigidBody.freezeRotation = false;
     }
 
+    //This is used to move the submarine foward in its oposition
     private void Propel()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -72,6 +73,7 @@ public class Submarine : MonoBehaviour
         }
     }
 
+    //Its used to tell the game manager that the player just start the movement of the submarine
     void FirstMove()
     {
         if (!hasMove)
@@ -90,9 +92,12 @@ public class Submarine : MonoBehaviour
                 case "Friendly":
                     break;
                 case "Finish":
+                    //This is used when th eplayer finish the level
+                    //TODO routine of finish
                     manager.NextScene();
                     break;
                 default:
+                    //This is used for the first touch with something that can kill the submarine
                     audioSource.clip = Resources.Load<AudioClip>("Audio/SFX/Submarine/Hit");
                     audioSource.loop = false;
                     audioSource.Play();
@@ -106,6 +111,23 @@ public class Submarine : MonoBehaviour
         else
         {
             audioSource.Play();
+        }
+    }
+
+    private void OnTriggerEnter(Collider target)
+    {
+        if (submaerineState == State.Alive)
+        {
+            switch (target.tag)
+            {
+                case "Star":
+                    //By convention there will be always 3 stars named Star + _ + Number of the star 
+                    //thats how we know there will be a number to parse 
+                    int starNumber = int.Parse(target.name.Split('_')[1]);
+                    manager.SetStar(starNumber);
+                    Destroy(target.gameObject);
+                    break;
+            }
         }
     }
 }
