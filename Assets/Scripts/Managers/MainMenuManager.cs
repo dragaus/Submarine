@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -15,9 +14,10 @@ public class MainMenuManager : MonoBehaviour
         levelData = Resources.Load<LevelData>(GameInfo.levelDataPath);
         userData = Resources.Load<UserData>(GameInfo.userDataPath);
 
+        playButton.gameObject.SetActive(false);
+
         if (Storage.CanLoadData())
         {
-            Debug.Log("I'm loading data");
             var gameData = JsonUtility.FromJson<GameData>(Storage.LoadJsonData(GameInfo.savingData));
 
             //Recovering level data values 
@@ -33,9 +33,13 @@ public class MainMenuManager : MonoBehaviour
             userData.currentGame.currentTotalTime = gameData.currentTotalTime;
             userData.currentGame.isRepeatLevel = gameData.isRepeatLevel;
             userData.generalData.totalTime = gameData.totalTime;
+            playButton.gameObject.SetActive(true);
+            Debug.Log($"trys in level 1 is {levelData.trys[0]}");
         }
-
-        Debug.Log(JsonUtility.ToJson(levelData));
+        else
+        {
+            playButton.gameObject.SetActive(true);
+        }
 
         levelData.Initialize();
 
@@ -44,15 +48,11 @@ public class MainMenuManager : MonoBehaviour
         playButton.onClick.AddListener(GoToLevel0);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void GoToLevel0()
     {
-        SceneManager.LoadScene("Level_0");
+        userData.currentGame.currentLives = GameInfo.lives;
+        userData.currentGame.isRepeatLevel = false;
+        LoadManager.LoadNewScene("Level_0", true);
     }
 }
 
