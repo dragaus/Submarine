@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -11,10 +13,47 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelData = Resources.Load<LevelData>(GameInfo.levelDataPath);
-        userData = Resources.Load<UserData>(GameInfo.userDataPath);
+        Initialization();
 
-        playButton.gameObject.SetActive(false);
+
+    }
+
+    async void Initialization() 
+    {
+        playButton.onClick.AddListener(GoToLevel0);
+        playButton.gameObject.SetActive(true);
+
+        Debug.Log("In Order 0");
+
+        await GetData();
+
+        Debug.Log("In Order 2");
+
+        levelData.Initialize();
+
+        Storage.SaveGameInfo(userData, levelData);
+
+    }
+
+    async Task<bool> GetData() 
+    {
+        var levelInAddress = Addressables.LoadAssetAsync<LevelData>(GameInfo.levelDataPath);
+
+        while (!levelInAddress.IsDone) 
+        {
+            await Task.Yield();
+        }
+
+        levelData = levelInAddress.Result;
+
+        var userInAddress = Addressables.LoadAssetAsync<UserData>(GameInfo.userDataPath);
+
+        while (!userInAddress.IsDone)
+        {
+            await Task.Yield();
+        }
+
+        userData = userInAddress.Result;
 
         if (Storage.CanLoadData())
         {
@@ -34,18 +73,14 @@ public class MainMenuManager : MonoBehaviour
             userData.currentGame.isRepeatLevel = gameData.isRepeatLevel;
             userData.generalData.totalTime = gameData.totalTime;
             playButton.gameObject.SetActive(true);
-            Debug.Log($"trys in level 1 is {levelData.trys[0]}");
+            Debug.Log($"trys in level 1 is {levelData.trys[0]}, Order 1");
         }
         else
         {
             playButton.gameObject.SetActive(true);
         }
 
-        levelData.Initialize();
-
-        Storage.SaveGameInfo();
-
-        playButton.onClick.AddListener(GoToLevel0);
+        return true;
     }
 
     void GoToLevel0()

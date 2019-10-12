@@ -11,8 +11,8 @@ public static class GameInfo
 
     public const string savingData = "info";
 
-    public const string levelDataPath = "Data/Level/CurrentLevelData";
-    public const string userDataPath = "Data/User/CurrentUserData";
+    public const string levelDataPath = "Data/CurrentLevelData.asset";
+    public const string userDataPath = "Data/CurrentUserData.asset";
 
     public const int lives = 3;
 }

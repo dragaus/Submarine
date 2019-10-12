@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     UIManager uiManager;
 
-    [SerializeField]UserData userData;
-    [SerializeField]LevelData levelData;
+    UserData userData;
+    LevelData levelData;
 
     GameObject submarine;
 
@@ -32,12 +35,6 @@ public class GameManager : MonoBehaviour
         //We add the ui into the scene scine its easier to handle in just one separete scene for all the levels
         SceneManager.LoadScene("GameUI", LoadSceneMode.Additive);
 
-        //We check if the user data tell us that the player repeat the level or not
-        if (!userData.currentGame.isRepeatLevel)
-        {
-            userData.currentGame.currentTotalTime = 0;
-        }
-
         //The names of the levels by convention are level + _+ number of the level
         //Thats how we can determine that the split will always work 
         levelNumber = int.Parse(SceneManager.GetActiveScene().name.Split('_')[1]);
@@ -47,17 +44,48 @@ public class GameManager : MonoBehaviour
         starManager = GameObject.Find("Star Manager").transform;
     }
 
-    public void Initilization(UIManager manager)
+    public async void Initilization(UIManager manager)
     {
         uiManager = manager;
 
+        await LoadData();
+
         //Every try we add a try into the game but the data is only storage when a player dies or beats the level
         levelData.trys[levelNumber]++;
+
+        //We check if the user data tell us that the player repeat the level or not
+        if (!userData.currentGame.isRepeatLevel)
+        {
+            userData.currentGame.currentTotalTime = 0;
+        }
 
         for (int i = 0; i < starManager.childCount; i++)
         {
             starManager.GetChild(i).gameObject.SetActive(levelData.starsInLevels[levelNumber].levelStars[i] == 0);
         }
+    }
+
+    public async Task<bool> LoadData() 
+    {
+        var dataUser = Addressables.LoadAssetAsync<UserData>(GameInfo.userDataPath);
+
+        while (!dataUser.IsDone)
+        {
+            await Task.Yield();
+        }
+
+        userData = dataUser.Result;
+
+        var dataLevel = Addressables.LoadAssetAsync<LevelData>(GameInfo.levelDataPath);
+
+        while (!dataLevel.IsDone)
+        {
+            await Task.Yield();
+        }
+
+        levelData = dataLevel.Result;
+
+        return true;
     }
 
     public void StartMovement()
@@ -166,7 +194,7 @@ public class GameManager : MonoBehaviour
         userData.currentGame.currentLives--;
         userData.currentGame.isRepeatLevel = true;
         levelData.deads[levelNumber]++;
-        Storage.SaveGameInfo();
+        Storage.SaveGameInfo(userData, levelData);
 
         //This is set if the player wants to accelerate the proces of the destruction
         uiManager.SetNextButton(()=> 
@@ -216,7 +244,7 @@ public class GameManager : MonoBehaviour
         submarineIsTrascending = true;
         levelData.wins[levelNumber]++;
         SetStarsCollected();
-        Storage.SaveGameInfo();
+        Storage.SaveGameInfo(userData, levelData);
 
         userData.currentGame.isRepeatLevel = false;
         userData.generalData.totalTime += userData.currentGame.currentTotalTime;

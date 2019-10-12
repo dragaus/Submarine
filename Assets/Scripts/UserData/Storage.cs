@@ -9,11 +9,8 @@ using UnityEngine;
 
 public class Storage
 {
-    public static void SaveGameInfo()
+    public static void SaveGameInfo(UserData userData, LevelData levelData)
     {
-        var userData = Resources.Load<UserData>(GameInfo.userDataPath);
-        var levelData = Resources.Load<LevelData>(GameInfo.levelDataPath);
-
         var gameDataToSave = new GameData()
         {
             currentLives = userData.currentGame.currentLives,

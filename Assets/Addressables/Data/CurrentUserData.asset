@@ -14,11 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentGame:
     currentLives: 3
+    isRepeatLevel: 0
     currentTotalTime: 0
     currentScore: 0
   generalData:
-    trys: 0
-    deads: 0
-    wins: 0
     totalTime: 0
-    maxScore: 0
