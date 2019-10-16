@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2699246491504749318}
   - component: {fileID: 3770469637114224008}
   - component: {fileID: 1227441529}
+  - component: {fileID: 6467513317295911164}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -113,3 +114,18 @@ MonoBehaviour:
   noiseScale: 1.2
   noiseFrecuency: 1.2
   noiseSpeed: 3
+--- !u!114 &6467513317295911164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699246491504749319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdcd06815c47d30489f70df42db56a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frustumSettings:
+    baseSettings: {fileID: 11400000, guid: 1f9185ccee4e7e548980b695cf075c08, type: 2}
+    qualitySettings: {fileID: 0}

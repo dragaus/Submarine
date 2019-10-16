@@ -14,8 +14,6 @@ public class MainMenuManager : MonoBehaviour
     void Start()
     {
         Initialization();
-
-
     }
 
     async void Initialization() 
@@ -23,11 +21,7 @@ public class MainMenuManager : MonoBehaviour
         playButton.onClick.AddListener(GoToLevel0);
         playButton.gameObject.SetActive(true);
 
-        Debug.Log("In Order 0");
-
         await GetData();
-
-        Debug.Log("In Order 2");
 
         levelData.Initialize();
 
@@ -73,7 +67,6 @@ public class MainMenuManager : MonoBehaviour
             userData.currentGame.isRepeatLevel = gameData.isRepeatLevel;
             userData.generalData.totalTime = gameData.totalTime;
             playButton.gameObject.SetActive(true);
-            Debug.Log($"trys in level 1 is {levelData.trys[0]}, Order 1");
         }
         else
         {
