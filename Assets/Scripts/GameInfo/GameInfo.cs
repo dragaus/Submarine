@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameInfo
 {
-    public const int numberOfLevels = 3;
+    public const int numberOfLevels = 4;
 
     public const string levelPath = "levels";
     public const string userPath = "data";

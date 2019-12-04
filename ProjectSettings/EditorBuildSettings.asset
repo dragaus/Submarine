@@ -18,6 +18,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Cubeland/Level_2.unity
     guid: 272ae60c3e9a86546bf2280562d44b2e
   - enabled: 1
+    path: Assets/Scenes/Levels/Cubeland/Level_3.unity
+    guid: 247220409e9af5143a129ada8ef8d726
+  - enabled: 1
+    path: Assets/Scenes/Levels/Cubeland/Level_4.unity
+    guid: aa9661b622099124189f6619ce533356
+  - enabled: 1
+    path: Assets/Scenes/Menus/WinMenu.unity
+    guid: 3069f66b1fc2ab947a8387fe5503d088
+  - enabled: 1
     path: Assets/Scenes/UI/GameUI.unity
     guid: 35679063f49ae414a96ad4d18a135b91
   - enabled: 1

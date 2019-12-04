@@ -30,9 +30,9 @@ public class UIManager : MonoBehaviour
     {
         manager = FindObjectOfType<GameManager>();
         manager.Initilization(this);
-        livesAmountText.text = $"X {manager.GetLives()}";
         HideNextButton();
         HideFinishPanel();
+        livesAmountText.text = $"X {manager.GetLives()}";
     }
 
     private void Update()

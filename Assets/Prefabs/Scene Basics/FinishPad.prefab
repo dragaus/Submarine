@@ -821,6 +821,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.separateAxes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.x.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.curve.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.y.scalar
+      value: 20.94395
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.x.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.curve.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916548716643907250, guid: 9f86498629d000244aa55f9aebbb6876,
+        type: 3}
+      propertyPath: RotationModule.y.minScalar
+      value: 87.266464
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f86498629d000244aa55f9aebbb6876, type: 3}
 --- !u!4 &7792080856767387035 stripped

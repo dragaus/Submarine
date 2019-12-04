@@ -80,7 +80,8 @@ public class MainMenuManager : MonoBehaviour
     {
         userData.currentGame.currentLives = GameInfo.lives;
         userData.currentGame.isRepeatLevel = false;
-        LoadManager.LoadNewScene("Level_0", true);
+        //LoadManager.LoadNewScene("Level_0", true);
+        LoadManager.LoadNewScene("Level_3", true);
     }
 }
 
